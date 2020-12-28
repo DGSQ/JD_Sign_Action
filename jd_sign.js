@@ -11,6 +11,8 @@ const download = require('download')
 const cookie = process.env.JD_COOKIE
 // 京东Cookie
 const dual_cookie = process.env.JD_DUAL_COOKIE
+// 京东Cookie
+const three_cookie = process.env.JD_THREE_COOKIE
 // Server酱SCKEY
 const push_key = process.env.PUSH_KEY
 
