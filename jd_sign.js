@@ -63,6 +63,15 @@ function setupCookie() {
   fs.writeFileSync(js_path, js_content, 'utf8')
 }
 
+function setuptwoCookie() {
+  var js_content = fs.readFileSync(js_path, 'utf8')
+  js_content = js_content.replace(/var Key = ''/, `var Key = '${cookie}'`)
+  if (dual_cookie) {
+    js_content = js_content.replace(/var DualKey = ''/, `var DualKey = '${dual_cookie}'`)
+  }
+  fs.writeFileSync(js_path, js_content, 'utf8')
+}
+
 function sendNotificationIfNeed() {
 
   if (!push_key) {
@@ -102,12 +111,34 @@ function sendNotificationIfNeed() {
   })
 }
 
+function two(){
+if (!cookie) {
+    console.log('请配置京东cookie!'); return;
+  }
+
+  // 1、下载脚本
+  download(js_url, './').then(res=>{
+    // 2、替换cookie
+    setuptwoCookie()
+    // 3、执行脚本
+    exec(`node '${js_path}' >> '${result_path}'`);
+    // 4、发送推送
+    sendNotificationIfNeed() 
+  }).catch((err)=>{
+    console.log('脚本文件下载失败，任务中断！');
+    fs.writeFileSync(error_path, err, 'utf8')
+  })
+
+}
+
 function main() {
 
   if (!cookie) {
     console.log('请配置京东cookie!'); return;
   }
 
+  //加一个通知
+  setuptwoCookie()
   // 1、下载脚本
   download(js_url, './').then(res=>{
     // 2、替换cookie
