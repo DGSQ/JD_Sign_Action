@@ -65,7 +65,7 @@ function setupCookie() {
 
 function setuptwoCookie() {
   var js_content = fs.readFileSync(js_path, 'utf8')
-  js_content = js_content.replace(/var Key = ''/, `var Key = '${cookie}'`)
+  js_content = js_content.replace(/var Key = ''/, `var Key = '${three_cookie}'`)
   if (dual_cookie) {
     js_content = js_content.replace(/var DualKey = ''/, `var DualKey = '${dual_cookie}'`)
   }
@@ -119,7 +119,7 @@ if (!cookie) {
   // 1、下载脚本
   download(js_url, './').then(res=>{
     // 2、替换cookie
-    setuptwoCookie()
+    setupCookie()
     // 3、执行脚本
     exec(`node '${js_path}' >> '${result_path}'`);
     // 4、发送推送
@@ -138,11 +138,11 @@ function main() {
   }
 
   //加一个通知
-  setuptwoCookie()
+  two()
   // 1、下载脚本
   download(js_url, './').then(res=>{
     // 2、替换cookie
-    setupCookie()
+    setuptwoCookie()
     // 3、执行脚本
     exec(`node '${js_path}' >> '${result_path}'`);
     // 4、发送推送
