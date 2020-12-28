@@ -60,6 +60,9 @@ function setupCookie() {
   if (dual_cookie) {
     js_content = js_content.replace(/var DualKey = ''/, `var DualKey = '${dual_cookie}'`)
   }
+  if (three_cookie) {
+    js_content = js_content.replace(/var DualKey = ''/, `var DualKey = '${three_cookie}'`)
+  }
   fs.writeFileSync(js_path, js_content, 'utf8')
 }
 
